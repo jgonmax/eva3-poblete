@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="refresh" content="1">
+    <title>Panel de Control IoT - Jesus Gonzalez</title>
+    <style>
+        #cuerpo-global { 
+            font-family: 'Courier New', monospace; 
+            background: #141414; 
+            color: #00ff41; 
+            margin: 0; 
+            padding: 20px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #titulo-principal { 
+            color: #ffff00; 
+            margin-bottom: 20px; 
+            font-size: 24px;
+            text-shadow: 0 0 5px rgba(255,255,0,0.5);
+        }
+        #contenedor-paneles {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        #seccion-monitor {
+            display: flex;
+            flex-direction: column;
+        }
+        #subtitulo-monitor {
+            color: #ffffff;
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        #monitor-terminal { 
+            background: #000000; 
+            padding: 15px; 
+            width: 500px;
+            height: 400px;
+            overflow-y: auto; 
+            border: 3px solid #00aa00; 
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.4;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+        }
+        #seccion-control {
+            background: #222222;
+            padding: 20px;
+            border: 3px solid #444444;
+            height: 390px;
+            width: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+        }
+        #titulo-control {
+            color: #ffffff;
+            font-size: 16px;
+            text-align: center;
+            margin: 0;
+        }
+        .formulario-boton {
+            width: 100%;
+        }
+        #btn-verde {
+            width: 100%;
+            background: #008800;
+            color: white;
+            border: 2px solid #00ff00;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #btn-amarillo {
+            width: 100%;
+            background: #888800;
+            color: white;
+            border: 2px solid #ffff00;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #btn-rojo {
+            width: 100%;
+            background: #880000;
+            color: white;
+            border: 2px solid #ff0000;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #btn-apagar {
+            width: 100%;
+            background: #444444;
+            color: white;
+            border: 2px solid #888888;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body id="cuerpo-global">
+
+    <h1 id="titulo-principal">SISTEMA CONTROL PROCESO IoT - EVALUACIÓN 3</h1>
+
+    <div id="contenedor-paneles">
+        <div id="seccion-monitor">
+            <h3 id="subtitulo-monitor">LOGS DEL SISTEMA (TELEMETRÍA EN NUBE):</h3>
+            <div id="monitor-terminal">{% for msg in mensajes %}{{ msg }}
+{% endfor %}</div>
+        </div>
+
+        <div id="seccion-control">
+            <h3 id="titulo-control">CONMUTACIÓN DE ESTADOS</h3>
+            
+            <form action="/enviar_comando" method="POST">
+                <input type="hidden" name="comando" value="VERDE_ON">
+                <button type="submit" id="btn-verde">ESTADO NORMAL (VERDE)</button>
+            </form>
+
+            <form action="/enviar_comando" method="POST">
+                <input type="hidden" name="comando" value="AMARILLO_ON">
+                <button type="submit" id="btn-amarillo">ADVERTENCIA (AMARILLO)</button>
+            </form>
+
+            <form action="/enviar_comando" method="POST">
+                <input type="hidden" name="comando" value="ROJO_ON">
+                <button type="submit" id="btn-rojo">ALERTA CRÍTICA (ROJO)</button>
+            </form>
+
+            <form action="/enviar_comando" method="POST">
+                <input type="hidden" name="comando" value="APAGAR_TODO">
+                <button type="submit" id="btn-apagar">APAGAR ACTUADORES</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
